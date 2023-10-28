@@ -1,5 +1,8 @@
+"use client";
 import { Footer, Navbar } from "@/components/main";
 import "./globals.css";
+import { AuthContextProvider } from "@/context/authContext";
+import MainLayout from "@/components/common/layout/MainLayout";
 
 export const metadata = {
   title: "Create Next App",
@@ -13,10 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="relative bg-teal-50 w-screen overflow-x-hidden">
-        <Navbar />
-        {children}
-        <Footer />
+      <body className="relative bg-teal-50 overflow-x-hidden">
+        <AuthContextProvider>
+          <MainLayout>{children}</MainLayout>
+        </AuthContextProvider>
       </body>
     </html>
   );

@@ -1,21 +1,22 @@
 "use client";
 
+import { useAuthentication } from "@/context/authContext";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { BiSolidCart, BiMenu } from "react-icons/bi";
 import { IoClose } from "react-icons/io5";
 
 const Controller = () => {
-  const handleSignIn = () => {};
-  const handleSignUp = () => {};
+  const { openLogin, openRegister } = useAuthentication();
+
   return (
     <>
-      <div className="btnItem" onClick={handleSignIn}>
+      <div className="btnItem cursor-pointer" onClick={openLogin}>
         Sign In
       </div>
-      <div className="btnItem" onClick={handleSignUp}>
+      <div className="btnItem cursor-pointer" onClick={openRegister}>
         Join Us
       </div>
     </>
@@ -24,6 +25,24 @@ const Controller = () => {
 
 const Navbar = () => {
   const [show, setShow] = useState<boolean>(false);
+  const navRef = useRef<HTMLDivElement>(null);
+
+  const handleAutoCloseNav = () => {
+    if (navRef.current) {
+      const { clientWidth } = navRef.current;
+      if (clientWidth > 768) setShow(false);
+    }
+  };
+
+  console.log(show);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleAutoCloseNav);
+
+    return () => {
+      window.removeEventListener("resize", handleAutoCloseNav);
+    };
+  }, []);
 
   return (
     <div
@@ -58,7 +77,8 @@ const Navbar = () => {
         </div>
       </div>
       <div
-        className={`absolute top-[100%] border-t right-0 lg:hidden h-screen w-full bg-white transition-all duration-500 transform ${
+        ref={navRef}
+        className={`absolute top-[100%] !z-20 border-t right-0 lg:hidden h-screen w-full bg-white transition-all duration-500 transform ${
           show ? "translate-x-0" : "translate-x-full"
         }`}
       >

@@ -9,7 +9,7 @@ import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 
 const Footer = () => {
   return (
-    <div className="py-10 md:py-20 px-8 lg:px-16">
+    <div className="py-10 md:py-20 px-8 lg:px-16 z-[-2]">
       <>
         <div className="hidden lg:grid grid-cols-4 gap-x-[24px]">
           {footerLinks?.map((item, index) => (
