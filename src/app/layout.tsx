@@ -1,8 +1,11 @@
 "use client";
-import { Footer, Navbar } from "@/components/main";
+
 import "./globals.css";
 import { AuthContextProvider } from "@/context/authContext";
 import MainLayout from "@/components/common/layout/MainLayout";
+import ToastNotification from "@/components/common/ToastNotification";
+import "react-toastify/dist/ReactToastify.css";
+import { RecoilRoot } from "recoil";
 
 export const metadata = {
   title: "Create Next App",
@@ -16,10 +19,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="relative bg-teal-50 overflow-x-hidden">
-        <AuthContextProvider>
-          <MainLayout>{children}</MainLayout>
-        </AuthContextProvider>
+      <body className="relative bg-white overflow-x-hidden">
+        <RecoilRoot>
+          <AuthContextProvider>
+            <MainLayout>{children}</MainLayout>
+            <ToastNotification />
+          </AuthContextProvider>
+        </RecoilRoot>
       </body>
     </html>
   );

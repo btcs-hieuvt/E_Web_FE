@@ -8,3 +8,7 @@
   box-sizing: border-box;
   font-family: "Manrope", sans-serif;
 }
+
+.input-field {
+  @apply h-[43px] mt-1;
+}

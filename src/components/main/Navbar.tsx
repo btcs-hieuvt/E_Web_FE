@@ -1,24 +1,58 @@
 "use client";
 
 import { useAuthentication } from "@/context/authContext";
+import useAuth from "@/hooks/useAuthentication";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
+import { useRecoilValue } from "recoil";
 
 import { BiSolidCart, BiMenu } from "react-icons/bi";
+import { FaUserCircle, FaShoppingCart } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
+import { accessTokenState } from "@/atom/authAtom";
+import { DecodeJWT } from "@/utils/auth/decodeJwt";
 
 const Controller = () => {
   const { openLogin, openRegister } = useAuthentication();
+  const { isAuthenticated, logout } = useAuth();
+  const accessToken = useRecoilValue(accessTokenState);
+
+  const user = DecodeJWT(accessToken as string);
+  console.log(user);
 
   return (
     <>
-      <div className="btnItem cursor-pointer" onClick={openLogin}>
-        Sign In
+      <div className="btnItem cursor-pointer flex items-center">
+        <FaUserCircle /> Profile
       </div>
-      <div className="btnItem cursor-pointer" onClick={openRegister}>
-        Join Us
-      </div>
+      {/* <div className="btnItem cursor-pointer flex items-center">
+        <FaShoppingCart /> Orders
+      </div> */}
+      {user && user.role === 1 ? (
+        <Link href="/admin" className="btnItem cursor-pointer">
+          Dashboard
+        </Link>
+      ) : null}
+      {isAuthenticated ? (
+        <>
+          <div
+            className="btnItem cursor-pointer"
+            onClick={() => logout(accessToken as string)}
+          >
+            Logout
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="btnItem cursor-pointer" onClick={openLogin}>
+            Sign In
+          </div>
+          <div className="btnItem cursor-pointer" onClick={openRegister}>
+            Join Us
+          </div>
+        </>
+      )}
     </>
   );
 };
@@ -33,8 +67,6 @@ const Navbar = () => {
       if (clientWidth > 768) setShow(false);
     }
   };
-
-  console.log(show);
 
   useEffect(() => {
     window.addEventListener("resize", handleAutoCloseNav);
@@ -54,7 +86,7 @@ const Navbar = () => {
         <Link href="/">
           <Image
             alt="logo"
-            src="/images/logo.png"
+            src="/images/dareu_logo.svg"
             width={115}
             height={32}
             className="object-cover"

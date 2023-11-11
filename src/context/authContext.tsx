@@ -9,12 +9,12 @@ import React, {
 } from "react";
 
 interface AuthContextData {
-  isLogin?: boolean;
-  openLogin?: () => void;
-  closeLogin?: () => void;
-  isRegister?: boolean;
-  openRegister?: () => void;
-  closeRegister?: () => void;
+  isLogin: boolean;
+  openLogin: () => void;
+  closeLogin: () => void;
+  isRegister: boolean;
+  openRegister: () => void;
+  closeRegister: () => void;
 }
 
 interface AuthProviderProps {

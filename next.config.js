@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+require("dotenv").config();
+const nextConfig = {
+  images: {
+    domains: ["dareuglobal.com"],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
