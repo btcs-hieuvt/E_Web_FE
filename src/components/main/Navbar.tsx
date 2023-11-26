@@ -19,7 +19,6 @@ const Controller = () => {
   const accessToken = useRecoilValue(accessTokenState);
 
   const user = DecodeJWT(accessToken as string);
-  console.log(user);
 
   return (
     <>

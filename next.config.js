@@ -2,7 +2,7 @@
 require("dotenv").config();
 const nextConfig = {
   images: {
-    domains: ["dareuglobal.com"],
+    domains: ["dareuglobal.com", "res.cloudinary.com", "assets.corsair.com"],
   },
 };
 

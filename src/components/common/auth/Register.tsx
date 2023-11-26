@@ -27,7 +27,6 @@ const Register = () => {
   const { openLogin } = useAuthentication();
 
   const onFinish = async (values: RegisterValues) => {
-    console.log("Received values of form: ", values);
     const bodyPost: RegisterType = {
       address: values.address,
       name: values.firstName.concat(" ", values.lastName),

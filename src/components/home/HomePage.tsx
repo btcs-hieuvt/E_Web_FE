@@ -13,7 +13,6 @@ const HomePage = () => {
   const { refreshToken } = useRefreshtoken();
 
   const decode = DecodeJWT(accesstoken as string);
-  console.log(decode);
 
   return (
     <div>

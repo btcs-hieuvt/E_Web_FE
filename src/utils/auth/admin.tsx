@@ -18,8 +18,6 @@ const withAdminAuth = (WrappedComponent: ComponentType<any>) => {
           const decodedToken = DecodeJWT(accessToken);
           const userRole: number = decodedToken.role;
 
-          console.log(userRole);
-
           if (userRole !== 1) {
             redirect("/");
           }

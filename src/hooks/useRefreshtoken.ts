@@ -20,9 +20,7 @@ const useRefreshtoken = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      console.log("refresh");
-
-      refreshToken();
+      // refreshToken();
     }, 1 * 60 * 1000);
 
     return () => {
