@@ -6,7 +6,7 @@ import {
   UploadFile,
   UploadProps,
 } from "antd/es/upload";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { UploadImage } from "@/api/uploadApi";
 
@@ -21,6 +21,25 @@ const CustomUploadImage = (props: Props) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string[]>(images ?? []);
 
+  const [fileList, setFileList] = useState<
+    {
+      uid: string;
+      name: string;
+      status: string;
+      url: string;
+    }[]
+  >([]);
+
+  useEffect(() => {
+    const newList = imageUrl.map((imageUrl, index) => ({
+      uid: index.toString(),
+      name: "image",
+      status: "done",
+      url: imageUrl,
+    }));
+    setFileList(newList);
+  }, [imageUrl]);
+
   useEffect(() => {
     if (images) {
       setImageUrl(images);
@@ -28,9 +47,12 @@ const CustomUploadImage = (props: Props) => {
   }, [images]);
 
   const beforeUpload = (file: RcFile) => {
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    const isJpgOrPng =
+      file.type === "image/jpeg" ||
+      file.type === "image/png" ||
+      file.type === "image/webp";
     if (!isJpgOrPng) {
-      message.error("You can only upload JPG/PNG file!");
+      message.error("You can only upload JPG/PNG/webp file!");
     }
     const isLt2M = file.size / 1024 / 1024 < 2;
     if (!isLt2M) {
@@ -67,13 +89,27 @@ const CustomUploadImage = (props: Props) => {
     return (
       <div>
         <Upload
-          maxCount={5}
-          action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
           listType="picture-card"
-          onChange={handleChange}
-          beforeUpload={beforeUpload}
+          fileList={fileList as any}
+          showUploadList={{ showPreviewIcon: false, showRemoveIcon: true }}
+          beforeUpload={() => false}
+          onRemove={(e) => {
+            const newFileList = fileList.filter((i) => i.uid !== e.uid);
+            setFileList(newFileList);
+            const newListUrl = newFileList.map((i) => i.url);
+            setImageUrl(newListUrl);
+            setImages(newListUrl);
+          }}
+          onChange={async ({ file }) => {
+            const formData = new FormData();
+            formData.append("files", file as any);
+            const urls = await UploadImage(formData);
+            const newUrlList = [...imageUrl, ...urls.result];
+            setImageUrl(newUrlList);
+            setImages(newUrlList);
+          }}
         >
-          {imageUrl.length < 5 && "+ Upload"}
+          {imageUrl.length >= 5 ? null : uploadButton}
         </Upload>
       </div>
     );

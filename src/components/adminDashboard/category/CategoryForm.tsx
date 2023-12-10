@@ -20,21 +20,18 @@ const CategoryForm = (props: Props) => {
   const { isEdit = false, itemEdit = undefined, handleCloseModel } = props;
   const [form] = Form.useForm();
   const [images, setImages] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
+  const { addCategory, updateCategory } = useCategoryApi();
 
   useEffect(() => {
     if (itemEdit) {
       form.setFieldValue("name", itemEdit.name);
+
+      const img = itemEdit?.thumbnail ? [itemEdit?.thumbnail] : [];
+      setImages(img);
     }
   }, [itemEdit]);
-
-  useEffect(() => {
-    const img = itemEdit?.thumbnail ? [itemEdit?.thumbnail] : [];
-    setImages(img);
-  }, [itemEdit]);
-
-  const [loading, setLoading] = useState(false);
-  const [messageApi, contextHolder] = message.useMessage();
-  const { addCategory, updateCategory } = useCategoryApi();
 
   const closeForm = () => {
     form.resetFields();

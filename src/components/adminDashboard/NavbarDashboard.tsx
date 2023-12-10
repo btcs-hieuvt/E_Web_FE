@@ -66,9 +66,6 @@ const NavbarDashboard = () => {
         defaultOpenKeys={["sub1"]}
         mode="inline"
         items={items}
-        onClick={(e) => {
-          console.log(e);
-        }}
       />
     </div>
   );

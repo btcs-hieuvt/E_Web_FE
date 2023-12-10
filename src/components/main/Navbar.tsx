@@ -109,7 +109,7 @@ const Navbar = () => {
       </div>
       <div
         ref={navRef}
-        className={`absolute top-[100%] !z-20 border-t right-0 lg:hidden h-screen w-full bg-white transition-all duration-500 transform ${
+        className={`absolute top-[100%] !z-[9999] border-t right-0 lg:hidden h-screen w-full bg-white transition-all duration-500 transform ${
           show ? "translate-x-0" : "translate-x-full"
         }`}
       >

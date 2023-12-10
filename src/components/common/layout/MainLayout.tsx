@@ -10,7 +10,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   useRefreshtoken();
   return (
     <>
-      <div className="min-h-screen relative flex flex-col justify-between">
+      <div className="min-h-screen overflow-hidden relative flex flex-col justify-between">
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

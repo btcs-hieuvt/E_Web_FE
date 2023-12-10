@@ -11,19 +11,19 @@ const CategoryPage = () => {
   //handle form category
   const handleCreateNew = () => {
     setShowFormCategory(true);
+    document.body.style.overflow = "hidden";
   };
 
   const handleCloseModel = () => {
     setShowFormCategory(false);
+    document.body.style.overflow = "auto";
   };
-
-  //handle table content list category
 
   return (
     <>
-      <div>
+      <div className={`overflow-hidden`}>
         <div className="text-2xl leading-6 font-semibold mb-4">
-          Manage Category
+          Manage Categories
         </div>
         <div>
           <Button

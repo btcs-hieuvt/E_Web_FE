@@ -4,6 +4,7 @@ import { accessTokenState, loadingAuthState } from "@/atom/authAtom";
 import { useAuthentication } from "@/context/authContext";
 import { LoginType } from "@/types/auth";
 import { toast } from "react-toastify";
+import jwt from "jsonwebtoken";
 import { useRecoilState } from "recoil";
 
 const useAuth = () => {
@@ -55,6 +56,27 @@ const useAuth = () => {
       setAccessToken(storedAccessToken);
     }
   }, []);
+
+  // useEffect(() => {
+  //   const checkTokenExpiration = () => {
+  //     // Kiểm tra token hết hạn tại đây
+  //     try {
+  //       const decodedToken = jwt.decode(
+  //         accessToken as string
+  //       ) as jwt.JwtPayload;
+  //       console.log("decode=====", decodedToken?.exp);
+
+  //       if (Number(decodedToken?.exp) > Date.now() / 1000) {
+  //         setAccessToken(null);
+  //         localStorage.removeItem("accessToken");
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+
+  //   checkTokenExpiration();
+  // }, [accessToken]);
 
   return {
     loadingAuth,
