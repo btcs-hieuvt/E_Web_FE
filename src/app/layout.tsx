@@ -1,6 +1,7 @@
 "use client";
 
 import "./globals.css";
+import "swiper/css";
 import { AuthContextProvider } from "@/context/authContext";
 import MainLayout from "@/components/common/layout/MainLayout";
 import ToastNotification from "@/components/common/ToastNotification";

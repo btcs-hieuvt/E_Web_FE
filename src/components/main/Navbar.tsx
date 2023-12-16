@@ -12,6 +12,7 @@ import { FaUserCircle, FaShoppingCart } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { accessTokenState } from "@/atom/authAtom";
 import { DecodeJWT } from "@/utils/auth/decodeJwt";
+import Logo from "../icons/Logo";
 
 const Controller = () => {
   const { openLogin, openRegister } = useAuthentication();
@@ -23,11 +24,8 @@ const Controller = () => {
   return (
     <>
       <div className="btnItem cursor-pointer flex items-center">
-        <FaUserCircle /> Profile
+        <FaUserCircle className="mr-2" /> Profile
       </div>
-      {/* <div className="btnItem cursor-pointer flex items-center">
-        <FaShoppingCart /> Orders
-      </div> */}
       {user && user.role === 1 ? (
         <Link href="/admin" className="btnItem cursor-pointer">
           Dashboard
@@ -78,18 +76,12 @@ const Navbar = () => {
   return (
     <div
       className={`transition-all duration-500 transform ${
-        show ? "bg-white" : "bg-inherit"
-      }  p-4 md:px-[30px] md:py-[14px] h-16 md:h-[88px] flex justify-between items-center relative`}
+        show ? "bg-white" : "bg-[#000]"
+      } text-white p-4 md:px-[30px] md:py-[14px] flex justify-between items-center relative`}
     >
       <div>
         <Link href="/">
-          <Image
-            alt="logo"
-            src="/images/dareu_logo.svg"
-            width={115}
-            height={32}
-            className="object-cover"
-          />
+          <Logo />
         </Link>
       </div>
       <div className="flex items-center justify-end space-x-[30px]">

@@ -15,10 +15,12 @@ const HomePage = () => {
   const decode = DecodeJWT(accesstoken as string);
 
   return (
-    <div>
-      HomePage <button onClick={notify}>Notify!</button>
-      {isAuthenticated ? "hello hiếu" : "no authen"}
-      <button onClick={refreshToken}>refresh</button>
+    <div className="w-full px-24 bg-yellow-600">
+      <div className="bg-blue-500">
+        HomePage <button onClick={notify}>Notify!</button>
+        {isAuthenticated ? "hello hiếu" : "no authen"}
+        <button onClick={refreshToken}>refresh</button>
+      </div>
     </div>
   );
 };
