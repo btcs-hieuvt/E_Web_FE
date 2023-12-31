@@ -12,7 +12,7 @@ export type ProductPost = {
   shipping?: boolean;
 };
 
-export type ProductDetailType = {
+export interface ProductDetailType {
   _id: string;
   name: string;
   slug: string;
@@ -24,4 +24,4 @@ export type ProductDetailType = {
   quantity: number;
   images: string[];
   shipping: boolean;
-};
+}

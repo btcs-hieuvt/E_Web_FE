@@ -1,83 +1,29 @@
 import React from "react";
 
-import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import {
-  Navigation,
-  Pagination,
-  Scrollbar,
-  A11y,
-  EffectCube,
-} from "swiper/modules";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import Image from "next/image";
+import { BannerData, ListItemBanner } from "@/constants/DataBanner";
 
-const Banner = () => {
-  const swiper = useSwiper();
-  const slides = [
-    {
-      type: "video",
-      source:
-        "https://assets.corsair.com/video/upload/f_auto,ac_none,q_auto/q_auto/v1700520753/Homepage%20Assets/Hero-Banners/16x9_Xmas_Loop.mp4",
-      title: "",
-      text: "This is a video slide",
-      buttonText: "Play",
-    },
-    {
-      type: "video",
-      source:
-        "https://assets.corsair.com/video/upload/f_auto,ac_none,q_auto/q_auto/v1696541785/Homepage%20Assets/Hero-Banners/hp-hero-k70-core.mp4",
-      title: "",
-      text: "This is a video slide",
-      buttonText: "Play",
-    },
-    {
-      type: "video",
-      source:
-        "https://assets.corsair.com/video/upload/f_auto,ac_none,q_auto/q_auto/v1696358754/Homepage%20Assets/Hero-Banners/hp-hero-dominator-titanium.mp4",
-      title: "",
-      text: "This is a video slide",
-      buttonText: "Play",
-    },
-    {
-      type: "video",
-      source:
-        "https://assets.corsair.com/video/upload/f_auto,ac_none,q_auto/q_auto/v1697563750/Homepage%20Assets/Hero-Banners/hp-hero-platform6.mp4",
-
-      title: "",
-      text: "This is a video slide",
-      buttonText: "Play",
-    },
-    {
-      type: "video",
-      source:
-        "https://assets.corsair.com/video/upload/f_auto,ac_none,q_auto/q_auto/v1692390033/Homepage%20Assets/Hero-Banners/hp_icue-link-hx.mp4",
-      title: "",
-      text: "This is a video slide",
-      buttonText: "Play",
-    },
-    {
-      type: "image",
-      source:
-        "https://assets.corsair.com/image/upload/f_auto/q_auto/v1687871241/akamai/hybris/homepage/images/hero-banner/hp-hero-xeneon-27qhd240-oled.webp",
-      title: "",
-      text: "This is an image slide",
-      buttonText: "Learn More",
-    },
-  ];
-
+const Banner = ({ slides }: { slides: ListItemBanner[] }) => {
   return (
     <div className="w-full bg-slate-300">
       <Swiper
-        modules={[Navigation, Pagination, Scrollbar, A11y, EffectCube]}
+        modules={[Navigation, Pagination, Autoplay]}
         slidesPerView={1}
-        pagination
+        pagination={{
+          clickable: true,
+        }}
+        loop={true}
         navigation
         autoplay={{
           delay: 2500,
           disableOnInteraction: false,
         }}
-        className="relative !h-[35vw] max-h-[80vh] min-h-[500px] object-cover"
+        className="relative !h-[35vw] max-h-[80vh] min-h-[500px] object-cover [&_.swiper-button-next]:text-white [&_.swiper-button-prev]:text-white
+         [&_.swiper-pagination-bullet]:!bg-[#ffffff5e]  [&_.swiper-pagination-bullet-active]:!bg-white"
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index} className="relative">
@@ -98,16 +44,19 @@ const Banner = () => {
                 className="object-cover align-middle"
               />
             )}
-            <div className="absolute bottom-6">
-              <p>{slide.text}</p>
-              <button>{slide.buttonText}</button>
+            <div className="absolute bottom-[28%] left-[10%] text-white flex flex-col space-y-[8px]">
+              <div className="text-4xl sm:text-5xl font-bold">
+                {slide.title}
+              </div>
+              {slide.text && (
+                <div className="text-sm sm:text-lg font-light max-w-[60%]">
+                  {slide.text}
+                </div>
+              )}
+              {/* <button>{slide.buttonText}</button> */}
             </div>
           </SwiperSlide>
         ))}
-        <div className="absolute w-full px-5 flex justify-between">
-          <button onClick={() => swiper.slidePrev()}>Prev</button>
-          <button onClick={() => swiper.slideNext()}>Next</button>
-        </div>
       </Swiper>
     </div>
   );

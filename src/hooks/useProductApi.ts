@@ -55,7 +55,7 @@ const useProductApi = () => {
       limit
     );
 
-    setListProduct(rs.result);
+    return rs.result;
   };
 
   return {
