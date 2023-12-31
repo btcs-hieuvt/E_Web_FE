@@ -9,7 +9,7 @@ import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 
 const Footer = () => {
   return (
-    <div className="py-10 md:py-20 px-8 lg:px-16 z-[-2]">
+    <div className="py-10 md:py-20 px-8 lg:px-16 z-[-2] text-white bg-[#000]">
       <>
         <div className="hidden lg:grid grid-cols-4 gap-x-[24px]">
           {footerLinks?.map((item, index) => (
@@ -21,7 +21,7 @@ const Footer = () => {
                 {item.links.map((i) => (
                   <Link
                     href={i.url}
-                    className="h-[22px] font-normal text-[#111]"
+                    className="h-[22px] font-normal text-[#fff]"
                     key={i.name}
                   >
                     {i.name}
@@ -55,7 +55,7 @@ const Footer = () => {
                     {item.links.map((i) => (
                       <Link
                         href={i.url}
-                        className="h-[22px] font-normal text-[#111]"
+                        className="h-[22px] font-normal text-[#fff]"
                         key={i.name}
                       >
                         {i.name}

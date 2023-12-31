@@ -44,7 +44,7 @@ const Authen = () => {
 
   if (isLogin || isRegister) {
     return (
-      <div className="absolute top-0 left-0 right-0 bottom-0 bg-[#1111114c] w-screen h-screen flex justify-center items-center">
+      <div className="absolute top-0 left-0 right-0 bottom-0 z-10 bg-[#1111114c] w-screen h-screen flex justify-center items-center">
         <div
           className="bg-[#fff] m-4 w-screen sm:w-[500px]  rounded-md  pb-2"
           ref={popupRef}
