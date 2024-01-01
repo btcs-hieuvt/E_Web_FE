@@ -15,7 +15,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="grid grid-cols-7 px-5 gap-1 w-screen">
+    <section className="grid grid-cols-7 px-5 py-7 gap-1 w-screen">
       <nav className="col-span-1 !z-[1]">
         <NavbarDashboard />
       </nav>

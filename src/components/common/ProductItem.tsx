@@ -19,7 +19,7 @@ const ProductItem = ({ data }: Props) => {
   };
 
   return (
-    <div className="col-1 shadow-lg rounded-md overflow-hidden text-white scale-95 hover:scale-100 transition-all ease-in-out duration-500">
+    <div className="col-1 flex flex-col shadow-lg rounded-md overflow-hidden text-white scale-95 hover:scale-100 transition-all ease-in-out duration-500">
       <div className="p-4 bg-gradient-to-br from-[#042f38] via-[#060e1a] to-[#051022]">
         <div
           onClick={handleSeeDetailPage}
@@ -30,31 +30,35 @@ const ProductItem = ({ data }: Props) => {
           }}
         ></div>
       </div>
-      <div className="bg-[#262626] px-4 pt-4 pb-7">
+      <div className="bg-[#262626] px-4 pt-4 pb-7 flex-1 flex flex-col">
         <div
           className="w-full h-[60px] text-sm font-semibold leading-4 line-clamp-3 tracking-normal cursor-pointer"
           onClick={handleSeeDetailPage}
         >
           {data.name}
         </div>
-        <div className="flex flex-col ">
-          <span className="text-lg block leading-5 font-bold">
-            {data.priceSale > 0
-              ? formatPrice(data.priceSale)
-              : formatPrice(data.price)}
-            đ
-          </span>
-          <span className="text-sm block mt-1 line-through leading-[18px] text-[#9d9d9d] font-semibold">
-            {data.priceSale > 0 ? `${formatPrice(100000)}đ` : null}
-          </span>
-        </div>
+        <div className="flex flex-col justify-between flex-1">
+          <div className="flex flex-col">
+            <span className="text-lg block leading-5 font-bold">
+              {data.priceSale > 0
+                ? formatPrice(data.priceSale)
+                : formatPrice(data.price)}
+              đ
+            </span>
+            {data.priceSale ? (
+              <span className="text-sm block mt-1 line-through leading-[18px] text-[#9d9d9d] font-semibold">
+                {data.priceSale > 0 ? `${formatPrice(data.price)}đ` : null}
+              </span>
+            ) : null}
+          </div>
 
-        <div
-          className="flex items-center space-x-[6px] mt-5 text-[#ece81a] hover:opacity-80 cursor-pointer"
-          onClick={() => handleAddToCart(data)}
-        >
-          <BiSolidCart className="text-[20px]" />
-          <div className="uppercase font-normal text-sm">add to cart</div>
+          <div
+            className="flex items-center space-x-[6px] mt-5 text-[#ece81a] hover:opacity-80 cursor-pointer"
+            onClick={() => handleAddToCart(data)}
+          >
+            <BiSolidCart className="text-[20px]" />
+            <div className="uppercase font-normal text-sm">add to cart</div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 export const formatPrice = (value: string | number) => {
   const formattedValue = value
-    .toString()
+    ?.toString()
     .replace(/\D/g, "")
     .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   return formattedValue;

@@ -38,10 +38,10 @@ const useProductApi = () => {
     return rs;
   };
 
-  const getProductBySlug = async (slug: string) => {
+  const getProductByNameSlug = async (slug: string) => {
     const rs = await productApi.getProductBySlug(slug);
 
-    return rs;
+    return rs.result;
   };
 
   const getListProductByCategory = async (
@@ -54,7 +54,7 @@ const useProductApi = () => {
       page,
       limit
     );
-
+    setListProduct(rs.result);
     return rs.result;
   };
 
@@ -64,7 +64,7 @@ const useProductApi = () => {
     addProduct,
     updateProduct,
     deleteProduct,
-    getProductBySlug,
+    getProductByNameSlug,
     getListProductByCategory,
   };
 };

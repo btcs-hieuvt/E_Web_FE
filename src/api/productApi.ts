@@ -32,7 +32,8 @@ export class productApi {
 
   static getProductBySlug = async (slug: string) => {
     try {
-      const ressponse = await apiBase.get(`product/get-product/${slug}`);
+      const response = await apiBase.get(`product/get-product/${slug}`);
+      return response.data;
     } catch (error) {
       console.log(error);
     }

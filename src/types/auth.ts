@@ -16,3 +16,11 @@ export interface ResponseAuth {
   success: boolean;
   data: any;
 }
+
+export interface ProfileType {
+  _id: string;
+  email: string;
+  password: string;
+  phone: string | number;
+  address: string;
+}
