@@ -17,6 +17,7 @@ import { showSideMenuState } from "@/atom/refAtom";
 import { Avatar, Badge } from "antd";
 import useCart from "@/hooks/useCart";
 import { useRouter } from "next/navigation";
+import SeacrhBar from "../search/SearchBar";
 
 const Controller = () => {
   const { openLogin, openRegister } = useAuthentication();
@@ -27,9 +28,6 @@ const Controller = () => {
 
   return (
     <>
-      <div className="btnItem cursor-pointer flex items-center">
-        <FaUserCircle className="mr-2" /> Profile
-      </div>
       {user && user.role === 1 ? (
         <Link href="/admin" className="btnItem cursor-pointer">
           Dashboard
@@ -37,12 +35,11 @@ const Controller = () => {
       ) : null}
       {isAuthenticated ? (
         <>
-          <div
-            className="btnItem cursor-pointer"
-            onClick={() => logout(accessToken as string)}
-          >
-            Logout
-          </div>
+          <Link href={"/my-profile"}>
+            <div className="btnItem cursor-pointer flex items-center">
+              <FaUserCircle className="mr-2" /> Profile
+            </div>
+          </Link>
         </>
       ) : (
         <>
@@ -90,6 +87,9 @@ const Navbar = () => {
           <Logo />
         </Link>
       </div>
+      {/* <div className="w-[50%]">
+        <SeacrhBar />
+      </div> */}
       <div className="flex items-center justify-end space-x-[30px]">
         <div className="space-x-[24px] hidden md:flex items-center">
           <Controller />

@@ -18,8 +18,9 @@ export interface ResponseAuth {
 }
 
 export interface ProfileType {
-  _id: string;
+  _id?: string;
   email: string;
+  name: string;
   password: string;
   phone: string | number;
   address: string;

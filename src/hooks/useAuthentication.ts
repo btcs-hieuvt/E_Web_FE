@@ -6,7 +6,7 @@ import {
   profileState,
 } from "@/atom/authAtom";
 import { useAuthentication } from "@/context/authContext";
-import { LoginType } from "@/types/auth";
+import { LoginType, ProfileType } from "@/types/auth";
 import { toast } from "react-toastify";
 import jwt from "jsonwebtoken";
 import { useRecoilState } from "recoil";
@@ -40,6 +40,12 @@ const useAuth = () => {
   const getMe = async () => {
     const rs = await authApi.getMe(accessToken as string);
     setProfile(rs.result);
+  };
+
+  const updateProfile = async (body: ProfileType) => {
+    const rs = await authApi.updateProfile(accessToken as string, body);
+
+    getMe();
   };
 
   useEffect(() => {
@@ -99,6 +105,7 @@ const useAuth = () => {
     login,
     isAuthenticated,
     logout,
+    updateProfile,
   };
 };
 export default useAuth;

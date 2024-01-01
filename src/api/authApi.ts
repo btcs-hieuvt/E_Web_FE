@@ -1,4 +1,9 @@
-import { LoginType, RegisterType, ResponseAuth } from "@/types/auth";
+import {
+  LoginType,
+  ProfileType,
+  RegisterType,
+  ResponseAuth,
+} from "@/types/auth";
 import apiBase from "./apiClient";
 
 export class authApi {
@@ -29,6 +34,21 @@ export class authApi {
   static getMe = async (accessToken: string) => {
     try {
       const response = await apiBase.get("auth/me", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      if (response) {
+        return response.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static updateProfile = async (accessToken: string, bodyPost: ProfileType) => {
+    try {
+      const response = await apiBase.put("auth/profile", bodyPost, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
