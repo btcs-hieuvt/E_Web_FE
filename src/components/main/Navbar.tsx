@@ -14,6 +14,9 @@ import { accessTokenState } from "@/atom/authAtom";
 import { DecodeJWT } from "@/utils/auth/decodeJwt";
 import Logo from "../icons/Logo";
 import { showSideMenuState } from "@/atom/refAtom";
+import { Avatar, Badge } from "antd";
+import useCart from "@/hooks/useCart";
+import { useRouter } from "next/navigation";
 
 const Controller = () => {
   const { openLogin, openRegister } = useAuthentication();
@@ -57,7 +60,8 @@ const Controller = () => {
 
 const Navbar = () => {
   const [show, setShow] = useRecoilState(showSideMenuState);
-  // const [show, setShow] = useState<boolean>(false);
+  const { totalItem } = useCart();
+  const router = useRouter();
   const navRef = useRef<HTMLDivElement>(null);
 
   const handleAutoCloseNav = () => {
@@ -90,9 +94,11 @@ const Navbar = () => {
         <div className="space-x-[24px] hidden md:flex items-center">
           <Controller />
         </div>
-        <div>
-          <BiSolidCart className="text-[24px]" />
-        </div>
+        <Badge count={totalItem} size="small">
+          <div onClick={() => router.push("/cart")} className="cursor-pointer">
+            <Avatar icon={<BiSolidCart className="text-[24px]" />} />
+          </div>
+        </Badge>
         <div
           onClick={() => setShow(!show)}
           className={`md:hidden ${show ? "text-[#000]" : ""}`}

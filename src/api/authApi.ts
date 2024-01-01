@@ -26,6 +26,21 @@ export class authApi {
     }
   };
 
+  static getMe = async (accessToken: string) => {
+    try {
+      const response = await apiBase.get("auth/me", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      if (response) {
+        return response.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   static logout = async (accessToken: string): Promise<any | undefined> => {
     try {
       const response = await apiBase.post("auth/logout", undefined, {

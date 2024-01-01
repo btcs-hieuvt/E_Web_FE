@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { authApi } from "@/api/authApi";
-import { accessTokenState, loadingAuthState } from "@/atom/authAtom";
+import {
+  accessTokenState,
+  loadingAuthState,
+  profileState,
+} from "@/atom/authAtom";
 import { useAuthentication } from "@/context/authContext";
 import { LoginType } from "@/types/auth";
 import { toast } from "react-toastify";
@@ -10,6 +14,7 @@ import { useRecoilState } from "recoil";
 const useAuth = () => {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
   const [loadingAuth, setLoadingAuth] = useRecoilState(loadingAuthState);
+  const [profile, setProfile] = useRecoilState(profileState);
   const { closeLogin } = useAuthentication();
 
   const login = async (body: LoginType) => {
@@ -31,6 +36,17 @@ const useAuth = () => {
       toast.success("Login False");
     }
   };
+
+  const getMe = async () => {
+    const rs = await authApi.getMe(accessToken as string);
+    setProfile(rs.result);
+  };
+
+  useEffect(() => {
+    if (accessToken && !profile) {
+      getMe();
+    }
+  }, [accessToken, profile]);
 
   const isAuthenticated = !!accessToken;
 

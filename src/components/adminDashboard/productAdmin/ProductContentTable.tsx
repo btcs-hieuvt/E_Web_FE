@@ -2,7 +2,7 @@ import { categoryListState } from "@/atom/categoryAtom";
 import { LimitPerPage } from "@/constants/common";
 import useProductApi from "@/hooks/useProductApi";
 import { ProductDetailType } from "@/types/product";
-import { Modal, Popconfirm, Select, Table } from "antd";
+import { Modal, Pagination, Popconfirm, Select, Table } from "antd";
 import { Button } from "antd/es/radio";
 import { ColumnsType } from "antd/es/table";
 import Image from "next/image";
@@ -35,15 +35,18 @@ const ProductContentTable = () => {
       ...options,
     ];
   }, [listCategory]);
+  const [categorySelected, setCategorySelected] = useState(
+    categoryOptions[0].value
+  );
 
   const totalPage = useMemo(() => {
     const total = listProduct?.totalPage;
     return total;
   }, [listProduct]);
 
-  const [categorySelected, setCategorySelected] = useState(
-    categoryOptions[0].value
-  );
+  const handleChangePage = (e: number) => {
+    setPage(e);
+  };
 
   useEffect(() => {
     const getProducts = async () => {
@@ -175,11 +178,19 @@ const ProductContentTable = () => {
         <Table
           columns={columns}
           scroll={{ x: 300 }}
-          pagination={
-            totalPage > 1 ? { position: ["bottomCenter"] } : undefined
-          }
+          pagination={false}
           dataSource={listProduct?.data ?? []}
         />
+        {totalPage > 1 ? (
+          <div className="flex items-center justify-center my-4">
+            <Pagination
+              current={page}
+              pageSize={LimitPerPage}
+              total={totalPage * LimitPerPage}
+              onChange={handleChangePage}
+            />
+          </div>
+        ) : null}
       </div>
       <Modal
         title="Update Category"
