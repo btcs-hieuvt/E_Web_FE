@@ -11,6 +11,8 @@ export default function Home() {
   const slides =
     BannerData.find((item) => item.keyType === "common")?.items ?? [];
 
+  console.log(process.env.API_URL);
+
   return (
     <main className="flex flex-col items-center justify-between">
       <Banner slides={slides} />
