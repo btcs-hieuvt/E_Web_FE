@@ -11,7 +11,7 @@ const Footer = () => {
   return (
     <div className="py-10 md:py-20 px-8 lg:px-16 z-[-2] text-white bg-[#000]">
       <>
-        <div className="hidden lg:grid grid-cols-4 gap-x-[24px]">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-[24px] gap-y-[8px]">
           {footerLinks?.map((item, index) => (
             <div key={Number(index)}>
               <div className="text-lg font-bold text-[#646464] uppercase">
@@ -31,7 +31,7 @@ const Footer = () => {
             </div>
           ))}
         </div>
-        <div className="[&_.ant-collapse-header]:!px-0 lg:hidden [&_.ant-collapse]:bg-[#fff]">
+        {/* <div className="[&_.ant-collapse-header]:!px-0 lg:hidden [&_.ant-collapse]:bg-[#fff]">
           <Collapse
             expandIconPosition="end"
             expandIcon={({ isActive }) => {
@@ -66,7 +66,7 @@ const Footer = () => {
               };
             })}
           />
-        </div>
+        </div> */}
       </>
       <div className="h-[0.5px] bg-[#111a] mt-10 mb-[30px] hidden lg:block"></div>
       <div className="text-[#646464] flex flex-col space-y-[8px] justify-center mt-10 lg:mt-0 lg:flex-row lg:justify-between lg:items-center">
