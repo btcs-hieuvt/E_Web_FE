@@ -6,6 +6,6 @@ export class searchApi {
     keywordSearch: string
   ): Promise<ProductDetailType[]> => {
     const response = await apiBase.get(`search?k=${keywordSearch}`);
-    return response.data;
+    return response.data.result;
   };
 }

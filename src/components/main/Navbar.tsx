@@ -87,9 +87,9 @@ const Navbar = () => {
           <Logo />
         </Link>
       </div>
-      {/* <div className="w-[50%]">
+      <div className="w-[50%]">
         <SeacrhBar />
-      </div> */}
+      </div>
       <div className="flex items-center justify-end space-x-[30px]">
         <div className="space-x-[24px] hidden md:flex items-center">
           <Controller />

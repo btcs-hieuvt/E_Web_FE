@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const baseUrlApi = "http://localhost:5000";
+export const baseUrlApi = process.env.NEXT_PUBLIC_API_URL;
 
 const apiBase = axios.create({
   baseURL: `${baseUrlApi}/api/v1/`,
@@ -8,6 +8,5 @@ const apiBase = axios.create({
     "Content-Type": "application/json",
   },
 });
-
 
 export default apiBase;
