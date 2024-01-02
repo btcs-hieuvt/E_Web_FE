@@ -87,18 +87,29 @@ const Navbar = () => {
           <Logo />
         </Link>
       </div>
-      <div className="w-[50%]">
-        <SeacrhBar />
-      </div>
-      <div className="flex items-center justify-end space-x-[30px]">
-        <div className="space-x-[24px] hidden md:flex items-center">
-          <Controller />
+      {!show ? (
+        <div className="w-[50%]">
+          <SeacrhBar />
         </div>
-        <Badge count={totalItem} size="small">
-          <div onClick={() => router.push("/cart")} className="cursor-pointer">
-            <Avatar icon={<BiSolidCart className="text-[24px]" />} />
-          </div>
-        </Badge>
+      ) : null}
+
+      <div className="flex items-center justify-end space-x-[30px]">
+        {!show ? (
+          <>
+            <div className="space-x-[24px] hidden md:flex items-center">
+              <Controller />
+            </div>
+            <Badge count={totalItem} size="small">
+              <div
+                onClick={() => router.push("/cart")}
+                className="cursor-pointer"
+              >
+                <Avatar icon={<BiSolidCart className="text-[24px]" />} />
+              </div>
+            </Badge>
+          </>
+        ) : null}
+
         <div
           onClick={() => setShow(!show)}
           className={`md:hidden ${show ? "text-[#000]" : ""}`}
@@ -112,7 +123,7 @@ const Navbar = () => {
       </div>
       <div
         ref={navRef}
-        className={`absolute top-[100%] border-t right-0 lg:hidden h-screen w-full bg-white transition-all duration-500 transform ${
+        className={`absolute top-[100%] border-t right-0 z-50 lg:hidden h-screen w-full bg-white transition-all duration-500 transform ${
           show ? "translate-x-0" : "translate-x-full"
         }`}
       >
