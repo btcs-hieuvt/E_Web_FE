@@ -14,6 +14,7 @@ import { useRecoilValue } from "recoil";
 import { accessTokenState, profileState } from "@/atom/authAtom";
 import { useAuthentication } from "@/context/authContext";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const CartPage = () => {
   const {
@@ -23,6 +24,7 @@ const CartPage = () => {
     handleChangeQuantityItem,
     totalPrice,
   } = useCart();
+  const router = useRouter();
   const accessToken = useRecoilValue(accessTokenState);
   const profile = useRecoilValue(profileState);
   const { openLogin } = useAuthentication();
@@ -168,7 +170,7 @@ const CartPage = () => {
                   </div>
                   <Button
                     className="mt-[30px] h-10 w-[180px] rounded-md flex items-center justify-center bg-[#ece81a] text-white"
-                    onClick={() => {}}
+                    onClick={() => router.push("/my-profile")}
                   >
                     Update Information
                   </Button>

@@ -7,6 +7,7 @@ import MainLayout from "@/components/common/layout/MainLayout";
 import ToastNotification from "@/components/common/ToastNotification";
 import "react-toastify/dist/ReactToastify.css";
 import { RecoilRoot } from "recoil";
+import SearchContextProvider from "@/context/searchContext";
 
 const metadata = {
   title: "Create Next App",
@@ -23,8 +24,10 @@ export default function RootLayout({
       <body className="relative bg-white overflow-x-hidden">
         <RecoilRoot>
           <AuthContextProvider>
-            <MainLayout>{children}</MainLayout>
-            <ToastNotification />
+            <SearchContextProvider>
+              <MainLayout>{children}</MainLayout>
+              <ToastNotification />
+            </SearchContextProvider>
           </AuthContextProvider>
         </RecoilRoot>
       </body>
