@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CartItem } from "@/atom/cartAtom";
 import useCart from "@/hooks/useCart";
 import { formatPrice } from "@/utils/formatPrice";
@@ -15,6 +15,9 @@ import { accessTokenState, profileState } from "@/atom/authAtom";
 import { useAuthentication } from "@/context/authContext";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import DropIn from "braintree-web-drop-in-react";
+import { paymentApi } from "@/api/paymentApi";
+import apiBase from "@/api/apiClient";
 
 const CartPage = () => {
   const {
@@ -23,11 +26,15 @@ const CartPage = () => {
     handleDeleteItemInCart,
     handleChangeQuantityItem,
     totalPrice,
+    handleDestroyCart,
   } = useCart();
   const router = useRouter();
   const accessToken = useRecoilValue(accessTokenState);
   const profile = useRecoilValue(profileState);
   const { openLogin } = useAuthentication();
+  const [clientToken, setClientToken] = useState("");
+  const [instance, setInstance] = useState();
+  const [loading, setLoading] = useState(false);
 
   const columns: ColumnsType<CartItem> = [
     {
@@ -117,11 +124,52 @@ const CartPage = () => {
     },
   ];
 
-  const handleCheckOut = () => {
+  //get payment gateway token
+  const getToken = async () => {
+    const data: any = await paymentApi.getPaymentGatewayToken();
+    setClientToken(data?.clientToken);
+  };
+
+  useEffect(() => {
+    getToken();
+  }, [accessToken]);
+
+  const handleCheckOut = async () => {
     if (!accessToken) {
       openLogin();
       toast.warning("Please login before proceeding to checkout");
     } else {
+      try {
+        setLoading(true);
+        const { nonce } = await (instance as any)?.requestPaymentMethod();
+        const newCart = cart.map((i) => ({
+          id: i._id,
+          price: i.priceSale > 0 ? i.priceSale : i.price,
+          quantity: i.totalItem,
+        }));
+        const { data } = await apiBase.post(
+          "payment/braintree/payment",
+          {
+            nonce,
+            cart: newCart,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        console.log(data);
+
+        setLoading(false);
+        handleDestroyCart();
+        router.push("/my-profile/my-order");
+        toast.success("Payment Completed Successfully ");
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
     }
   };
 
@@ -159,30 +207,52 @@ const CartPage = () => {
             </div>
             <div className="flex flex-col items-center pb-[30px]">
               {accessToken ? (
-                <div className="mt-[30px] w-full p-4 border border-[#fff] rounded-lg text-[#ffffffbd]">
-                  <span className="block text-center text-xl leading-5 font-semibold ">
-                    Checkout Information
-                  </span>
-                  <div className="space-y-[6px]">
-                    <div>Email: {profile?.email}</div>
-                    <div>Phone: {profile?.phone}</div>
-                    <div>Address: {profile?.address}</div>
+                <>
+                  <div className="mt-[30px] w-full p-4 border border-[#fff] rounded-lg text-[#ffffffbd]">
+                    <span className="block text-center text-xl leading-5 font-semibold ">
+                      Checkout Information
+                    </span>
+                    <div className="space-y-[6px]">
+                      <div>Email: {profile?.email}</div>
+                      <div>Phone: {profile?.phone}</div>
+                      <div>Address: {profile?.address}</div>
+                    </div>
+                    <Button
+                      className="mt-[30px] h-10 w-[180px] rounded-md flex items-center justify-center bg-[#ece81a] text-white"
+                      onClick={() => router.push("/my-profile")}
+                    >
+                      Update Information
+                    </Button>
                   </div>
-                  <Button
-                    className="mt-[30px] h-10 w-[180px] rounded-md flex items-center justify-center bg-[#ece81a] text-white"
-                    onClick={() => router.push("/my-profile")}
-                  >
-                    Update Information
-                  </Button>
-                </div>
-              ) : null}
 
-              <Button
-                className="mt-[30px] h-10 w-[200px] rounded-md flex items-center justify-center bg-red-400 text-white"
-                onClick={handleCheckOut}
-              >
-                Checkout
-              </Button>
+                  <div className="w-full [&_.braintree-heading]:text-white mt-2 flex flex-col items-center">
+                    {clientToken && cart.length > 0 ? (
+                      <div className="mt-2 w-full min-h-[200px]">
+                        <DropIn
+                          options={{
+                            authorization: clientToken,
+                            paypal: {
+                              flow: "vault",
+                            },
+                          }}
+                          onInstance={(instance) => setInstance(instance)}
+                        />
+                        <Button
+                          disabled={loading || !instance || !profile?.address}
+                          className={`mt-[30px] h-10 w-[200px] rounded-md flex items-center justify-center ${
+                            loading || !instance || !profile?.address
+                              ? "!bg-[#ccc]"
+                              : "!bg-red-400"
+                          }  !text-white`}
+                          onClick={handleCheckOut}
+                        >
+                          {loading ? "Processing..." : " Make Payment"}
+                        </Button>
+                      </div>
+                    ) : null}
+                  </div>
+                </>
+              ) : null}
             </div>
           </div>
         ) : (

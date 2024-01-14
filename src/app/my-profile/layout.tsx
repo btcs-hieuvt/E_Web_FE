@@ -7,6 +7,7 @@ import useAuth from "@/hooks/useAuthentication";
 import { useRecoilValue } from "recoil";
 import { accessTokenState } from "@/atom/authAtom";
 import { PiSignOutBold } from "react-icons/pi";
+import { useRouter } from "next/navigation";
 
 export default function ProfileLayout({
   children,
@@ -15,6 +16,7 @@ export default function ProfileLayout({
 }) {
   const { logout } = useAuth();
   const accessToken = useRecoilValue(accessTokenState);
+  const router = useRouter();
   const configMenu = [
     {
       name: "Account Information",
@@ -43,13 +45,16 @@ export default function ProfileLayout({
           </div>
           <div
             className=" cursor-pointer mt-3 px-3 py-1 h-12 border-t flex items-center"
-            onClick={() => logout(accessToken as string)}
+            onClick={() => {
+              router.push("/");
+              logout(accessToken as string);
+            }}
           >
             <PiSignOutBold className="mr-1" size={18} /> Logout
           </div>
         </div>
       </nav>
-      <div className="col-span-3 px-4">{children}</div>
+      <div className="col-span-5 px-4">{children}</div>
     </section>
   );
 }

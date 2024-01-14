@@ -56,6 +56,12 @@ const useCart = () => {
 
     toast.success("Item added to cart");
   };
+
+  const handleDestroyCart = () => {
+    localStorage.removeItem("cartItems");
+    setCart([]);
+  };
+
   const handleDeleteItemInCart = (id: string) => {
     const newCart = cart.filter((item) => item._id !== id);
     setCart(newCart);
@@ -113,6 +119,7 @@ const useCart = () => {
     totalItem,
     handleDeleteItemInCart,
     handleChangeQuantityItem,
+    handleDestroyCart,
   };
 };
 
