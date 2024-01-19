@@ -44,7 +44,7 @@ const MyProfilePage = () => {
   };
 
   return (
-    <div>
+    <div className="w-[70%]">
       <div className="uppercase h-12 flex items-center text-[28px] text-[#444] tracking-[.01rem] font-semibold">
         Account Information
       </div>
