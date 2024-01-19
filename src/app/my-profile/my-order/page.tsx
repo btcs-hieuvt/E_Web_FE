@@ -60,7 +60,7 @@ const MyOrderPage = () => {
                   </div>
                   <div className="col-span-1 flex flex-col space-y-[4px]">
                     <div className="font-semibold">Date</div>
-                    <div>{moment(o?.createAt).fromNow()}</div>
+                    <div>{moment(o?.createAt).format("HH:mm DD/MM/YYYY")}</div>
                   </div>
                 </div>
                 <div className="container mt-2 space-y-[12px]">

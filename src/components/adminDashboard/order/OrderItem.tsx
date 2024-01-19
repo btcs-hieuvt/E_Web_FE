@@ -88,7 +88,7 @@ const OrderItem = ({ data, index }: Props) => {
           </div>
           <div className="col-span-1 flex flex-col space-y-[4px]">
             <div className="font-semibold">Date</div>
-            <div>{moment(data?.createAt).fromNow()}</div>
+            <div>{moment(data?.createAt).format("HH:mm DD/MM/YYYY")}</div>
           </div>
         </div>
         <div className="mt-4">
