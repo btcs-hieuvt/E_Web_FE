@@ -23,4 +23,42 @@ export class paymentApi {
       console.log(error);
     }
   };
+
+  static allOrders = async (accessToken: string) => {
+    try {
+      const res = await apiBase.get("order/all-orders", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  static updateStatusOrder = async (
+    accessToken: string,
+    orderId: string,
+    status: string
+  ) => {
+    try {
+      const res = await apiBase.put(
+        `order/order-status/${orderId}`,
+        {
+          status: status,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
