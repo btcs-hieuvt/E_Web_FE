@@ -59,6 +59,8 @@ const OrderItem = ({ data, index }: Props) => {
     handleChangeStatusOrder();
   }, [selectedStatus]);
 
+  console.log(data);
+
   return (
     <Spin spinning={loading}>
       <div className="border rounded shadow px-4 py-5">
@@ -88,13 +90,18 @@ const OrderItem = ({ data, index }: Props) => {
           </div>
           <div className="col-span-1 flex flex-col space-y-[4px]">
             <div className="font-semibold">Date</div>
-            <div>{moment(data?.createAt).format("HH:mm DD/MM/YYYY")}</div>
+            <div>{moment(data?.createdAt).format("HH:mm DD/MM/YYYY")}</div>
           </div>
         </div>
         <div className="mt-4">
           <h1 className="text-sm font-semibold text-[#111] leading-4">
             Buyer Information
           </h1>
+          <div className="my-2 space-y-[4px]">
+            <div>Adress : {data?.buyer?.address}</div>
+            <div>Email : {data?.buyer?.email}</div>
+            <div>Phone : {data?.buyer?.phone}</div>
+          </div>
         </div>
         <div className="container mt-2 space-y-[12px]">
           <h1 className="text-sm font-semibold text-[#111] leading-4">

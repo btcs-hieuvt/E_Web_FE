@@ -38,7 +38,6 @@ const MyOrderPage = () => {
       <Spin spinning={loading}>
         <div className="w-full mt-2 space-y-[12px]">
           {orders?.map((o, i) => {
-            let totalPrice = 0;
             return (
               <div className="border rounded shadow px-4 py-5" key={i}>
                 <div className="grid grid-cols-5 gap-1 border-b pb-2">
@@ -60,7 +59,9 @@ const MyOrderPage = () => {
                   </div>
                   <div className="col-span-1 flex flex-col space-y-[4px]">
                     <div className="font-semibold">Date</div>
-                    <div>{moment(o?.createAt).format("HH:mm DD/MM/YYYY")}</div>
+                    <div>
+                      {moment(o?.createdAt).format("HH:mm DD/MM/YYYY")} aa
+                    </div>
                   </div>
                 </div>
                 <div className="container mt-2 space-y-[12px]">
